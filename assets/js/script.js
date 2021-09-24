@@ -3,6 +3,8 @@
 
 //generates hour out of 24
 var hour = moment().format("HH");
+var clock = moment().format("h:mm:ss a");
+console.log(clock);
 
 var day = function() {
     //generates date-time
@@ -49,12 +51,18 @@ $(document).ready(function() {
     $('.time-block').each(function() {
         var timeId = $(this).attr('id');
         var localVal = localStorage.getItem(timeId);
-        console.log(timeId);
-        console.log(localVal);
+        // console.log(timeId);
+        // console.log(localVal);
         
         $(this).children('.description').text(localVal);
     });
 });
+
+//reloads every 5 minutes to keep task urgency up to date
+window.setInterval('refresh()', 5*60*1000);
+function refresh() {
+    location.reload();
+};
 
 day();
 color();
