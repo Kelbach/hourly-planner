@@ -30,6 +30,7 @@ var color = function() {
     });
 };
 
+//save buttons
 $(".saveBtn").on('click', function(event){
     event.preventDefault();
     
@@ -47,13 +48,16 @@ $(".saveBtn").on('click', function(event){
     });
 });
 
+//loads localStorage data by KEY once the page loads
 $(document).ready(function() {
     $('.time-block').each(function() {
         var timeId = $(this).attr('id');
+        //grabs localStorage values by their KEY
         var localVal = localStorage.getItem(timeId);
         // console.log(timeId);
         // console.log(localVal);
         
+        //puts local values into .description textbox
         $(this).children('.description').text(localVal);
     });
 });
