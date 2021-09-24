@@ -1,5 +1,8 @@
-var tasks = JSON.parse(localStorage.getItem('tasks')) || {id:"",description:""}; //sets tasks as array as well
-console.log(tasks);
+// //im bad with arrays for some reason
+// var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+//generates hour out of 24
+var hour = moment().format("HH");
 
 var day = function() {
     //generates date-time
@@ -9,13 +12,10 @@ var day = function() {
 };
    
 var color = function() {
-    //generates hour out of 24
-    var hour = moment().format("HH");
-    console.log(hour);
     //sets color by comparing var hour to the id
     $('.time-block').each(function() {
         var t = $(this).attr('id');
-        console.log(t);
+
         if (t < hour) {
             $(this).addClass("past");
         }
@@ -31,12 +31,29 @@ var color = function() {
 $(".saveBtn").on('click', function(event){
     event.preventDefault();
     
-    var task = $(this).siblings('.description').val();
-    var taskHour = $(this).parent().attr('id');
-    tasks.id = taskHour;
-    tasks.description = task;    
+    //loop for saving tasks
+    $('.time-block').each(function() {
+        var task = $(this).children('.description').val();
+        var taskHour = $(this).attr('id');
 
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+        // tasks.id = taskHour;
+        // tasks.description = task;
+        // console.log(tasks.id);
+        // console.log(tasks.description);
+        
+        localStorage.setItem(taskHour, task);
+    });
+});
+
+$(document).ready(function() {
+    $('.time-block').each(function() {
+        var timeId = $(this).attr('id');
+        var localVal = localStorage.getItem(timeId);
+        console.log(timeId);
+        console.log(localVal);
+        
+        $(this).children('.description').text(localVal);
+    });
 });
 
 day();
